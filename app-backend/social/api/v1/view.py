@@ -70,17 +70,16 @@ def sign_in():
 
 
 @app.route('/api/v1/topic', methods=['POST', 'PUT'])
-def topic_add_update():
+def topic():
     is_ok, error_message = False, None
     try:
         json = request.get_json(silent=True)
         title = json['title']
         content = json['content']
         client_key = json['client_key']
-        refresh_key = json['refresh_key']
         access_token = json['access_token']
 
-        if client_key == '' or refresh_key == '':
+        if client_key == '' or access_token == '':
             raise Exception('client refresh keys are null')
 
         elif title == '' or content == '':
@@ -89,9 +88,11 @@ def topic_add_update():
         else:
             if request.method == 'POST': # INSERT, POST METHOD
                 return databaseHandler.add_new_topic(title=title, content=content, client_key=client_key, access_token=access_token)
+
             elif request.method == 'PUT': # UPDATE, PUT METHOD
                 topic_id = json['topic_id']
                 return databaseHandler.update_topic(topic_id=topic_id, title=title, content=content, client_key=client_key, access_token=access_token)
+
             else:
                 raise Exception('topic add update method or parameter problem')
     except Exception as e:
@@ -165,6 +166,28 @@ def hot():
             error_message = 'client key or access token can not be empty'
             raise Exception(error_message)
         return databaseHandler.hot(client_key=client_key, access_token=access_token)
+    except Exception as e:
+        functions.error()
+        print(e)
+        return jsonify(
+            error_message=error_message,
+            is_ok=is_ok
+        )
+
+@app.route('/api/v1/topic/detail', methods=['POST'])
+def view_topic():
+    is_ok, error_message = False, None
+    try:
+        json = request.get_json(silent=True)
+        client_key = json['client_key']
+        access_token = json['access_token']
+        topic_id = json['topic_id']
+        if client_key == '' or access_token == '':
+            error_message = 'client key or access token can not be empty'
+            raise Exception(error_message)
+
+        return databaseHandler.view_topic(topic_id=topic_id, client_key=client_key, access_token=access_token)
+
     except Exception as e:
         functions.error()
         print(e)

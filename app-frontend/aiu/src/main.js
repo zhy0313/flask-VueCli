@@ -14,7 +14,6 @@ Vue.use(VueQuillEditor)
 
 
 router.beforeEach((to, from, next) => {
-  console.log('test')
   if (to.meta.requiresAuth) {
       if (!auth.isAuhthendicated()){
         next({

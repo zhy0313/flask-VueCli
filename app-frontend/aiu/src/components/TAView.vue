@@ -6,7 +6,7 @@
       </div>
       <div class="row text-center">
           <div class="">
-            <span class="rating">{{ ta.rating }}</span>
+            <span class="rating">{{ ta.vote }}</span>
           </div>
       </div>
       <div class="row text-center">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-md-11 col-sm-11 col-xs-10">
-        {{ ta.content }}
+        <p v-html="ta.content"></p>
         <div class="" v-if="ta.is_topic">
           <a href="" v-for="tag in ta.tags">
           <span class="badge">{{ tag }}</span>

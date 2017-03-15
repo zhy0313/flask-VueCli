@@ -8,7 +8,7 @@ class TopicHandler(object):
     def api_hot_serializer(self, topic: Topic) -> dict:
         try:
             answer_length = len(Answer.query.filter_by(topic_id = topic.id).all())
-            print(answer_length)
+            user = User.query.filter_by(id=topic.published_by).first()
         except Exception as e:
             functions.error()
             print(e)
@@ -16,10 +16,30 @@ class TopicHandler(object):
         return dict(
             id=topic.id,
             title=topic.title,
-            published_by=topic.published_by,
-            published_at=topic.published_at,
+            submitted_by= user.nick,
+            submitted_at=topic.published_at,
             vote=topic.vote,
             answer=answer_length
+        )
+
+    def api_view_serializer(self, topic: Topic) -> dict:
+        try:
+            answer_length = len(Answer.query.filter_by(topic_id = topic.id).all())
+            user = User.query.filter_by(id=topic.published_by).first()
+        except Exception as e:
+            functions.error()
+            print(e)
+
+        return dict(
+            id=topic.id,
+            title=topic.title,
+            submitted_by= user.nick,
+            submitted_at=topic.published_at,
+            vote=topic.vote,
+            answer=answer_length,
+            content=topic.content,
+            is_topic= True,
+            view=0
         )
 
     def get_topic_by_id(self, topic_id) -> (bool, Topic):
@@ -48,7 +68,7 @@ class TopicHandler(object):
             functions.error()
             print(e)
 
-        return jsonify(is_ok=is_ok, error_message=error_message)
+        return jsonify(topic_id=topic.id, is_ok=is_ok, error_message=error_message)
 
     def update_topic(self, topic_id, title, content, user: User) -> jsonify:
         is_ok = False

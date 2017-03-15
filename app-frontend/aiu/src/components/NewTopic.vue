@@ -9,7 +9,8 @@
 
 <script>
   import InMenu from '@/components/InMenu';
-  import TopicInput from '@/components/TopicInput'
+  import TopicInput from '@/components/TopicInput';
+
   export default{
     name: 'NewTopic',
     components:{
