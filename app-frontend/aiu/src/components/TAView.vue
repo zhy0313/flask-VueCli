@@ -26,7 +26,8 @@
         </div>
         <div v-else="ta.is_topic" class="author-space"></div>
     </div>
-    <div class="col-md-12 author">
+
+    <div class="col-md-12 col-sm-12 col-xs-12 author">
       <p class="submit-info pull-right">submitted <submitted-at :date="ta.submitted_at"></submitted-at> by <a href="">{{ ta.submitted_by }}</a></p>
     </div>
   </div>
@@ -79,7 +80,7 @@
   }
   .author{
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
   }
 
   .topic{

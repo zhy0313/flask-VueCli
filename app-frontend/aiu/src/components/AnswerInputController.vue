@@ -1,26 +1,16 @@
 <template>
   <div>
-    <h3>New Topic</h3>
+    <h4>Your Answer</h4>
     <hr>
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 col col-xs-12">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Title" v-model="topic.title">
-          </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="form-group">
             <quill-editor id="editor"
                           ref="myTextEditor"
-                          v-model="topic.content">
+                          v-model="answer.content">
             </quill-editor>
 
           </div>
-
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Tags">
-            <span><b>**</b> use comma for splitting tags</span>
-          </div>
-
-
           <button class="btn btn-success btn-block" @click="post">Post</button>
         </div>
       </div>
@@ -32,39 +22,37 @@
 <script>
   import {auth} from '@/auth/Auth';
   import {clientKey} from '@/env';
-  import {newTopicUrl} from '@/config';
+  import {newAnswerUrl} from '@/config';
   import toastr from 'toastr';
+
   export default{
-      name: 'TopicInput',
+      name: 'AnswerInput',
       props:{
       },
       components:{
       },
       data(){
           return{
-            topic: {
-                    title: '',
+            answer: {
                     content: '',
-                    tags: ''
               }
           }
       },
       methods:{
           post: function () {
             const data = {
-                title: this.topic.title,
-                content: this.topic.content,
-                tags: this.topic.tags,
+                topic_id: this.$route.params.topic_id,
+                content: this.answer.content,
                 access_token: auth.getAccessToken(),
                 client_key: clientKey
             };
-            this.$http.post(newTopicUrl, data)
+            this.$http.post(newAnswerUrl, data)
               .then( (response) => {
                   if(response.status == 200){
                       var body = response.body;
                       console.log(body);
                       if(body.is_ok){
-                          toastr.success('Topic is successfully created', 'Success');
+                          toastr.success('answer is successfully created', 'Success');
                           this.$router.push({ path: 'ta/' + body.topic_id})
 
                       }

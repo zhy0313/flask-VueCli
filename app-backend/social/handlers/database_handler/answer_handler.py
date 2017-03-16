@@ -37,8 +37,22 @@ class AnswerHandler(object):
             print(e)
         return is_exist, answer
 
-    def insert_answer(self, title, content, published_by):
-        pass
+    def insert_answer(self, content, topic: Topic,  user: User):
+        is_ok, error_message = False, None
+        try:
+            new_answer = Answer(topic_id=topic.id, content=content, published_by=user.id)
+            database.session.add(new_answer)
+            database.session.commit()
+            is_ok = True
+        except Exception as e:
+            print(e)
+            functions.error()
+            error_message = 'access denied'
+        return jsonify(
+            is_ok=is_ok,
+            error_message=error_message,
+            topic_id=topic.id
+        )
 
     def update_answet(self, answer_id, title, content, updated_by):
         pass

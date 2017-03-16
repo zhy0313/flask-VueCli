@@ -20,6 +20,8 @@
             </div>
             <hr>
             <ta-view v-for="answer in answers" :key="answer.id" :ta="answer"></ta-view>
+            <answer-input></answer-input>
+
           </div>
           <div class="col-md-3 col-md-offset-1 col-sm-2 col-sm-offset-1 col-xs-10 col-xs-offset-1">
             <ta-view-right :date="topic.submitted_at"
@@ -35,6 +37,7 @@
 
 
 <script>
+
   import {clientKey} from '@/env';
   import {taViewUrl} from '@/config';
   import {auth} from '@/auth/Auth';
@@ -42,6 +45,7 @@
   import TAView from '@/components/TAView';
   import TAViewRightCol from '@/components/TAViewRightCol';
   import TopicButton from '@/components/TopicButton';
+  import AnswerInput from '@/components/AnswerInputController';
 
   export default{
       name:'PageView',
@@ -49,11 +53,12 @@
           'app-in-menu': InMenu,
           'taView': TAView,
           'taViewRight': TAViewRightCol,
-          'topicButton': TopicButton
+          'topicButton': TopicButton,
+          'answer-input': AnswerInput
       },
       data(){
         return{
-          topic_id: this.$route.params.topic_id,
+          topicId: this.$route.params.topic_id,
           topic: Object,
           answers: [],
           isServerRun: false,
@@ -65,7 +70,7 @@
            getTa: function(){
 
                const data = {
-                  topic_id: this.topic_id,
+                  topic_id: this.topicId,
                   client_key: clientKey,
                   access_token: auth.getAccessToken()
                };

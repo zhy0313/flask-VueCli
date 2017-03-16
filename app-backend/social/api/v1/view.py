@@ -195,3 +195,30 @@ def view_topic():
             error_message=error_message,
             is_ok=is_ok
         )
+
+
+@app.route('/api/v1/answer', methods=['POST', 'PUT'])
+def answer():
+    is_ok, error_message = False, None
+    try:
+        json = request.get_json(silent=True)
+        client_key = json['client_key']
+        access_token = json['access_token']
+        topic_id = json['topic_id']
+        content = json['content']
+        if client_key == '' or access_token == '':
+            error_message = 'client key or access token can not be empty'
+            raise Exception(error_message)
+
+        if request.method == 'POST':
+            return databaseHandler.add_new_answer(topic_id=topic_id, content=content, client_key=client_key, access_token=access_token)
+        elif request.method == 'PUT':
+            pass
+
+    except Exception as e:
+        functions.error()
+        print(e)
+        return jsonify(
+            error_message=error_message,
+            is_ok=is_ok
+        )

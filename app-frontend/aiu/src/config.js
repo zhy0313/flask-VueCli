@@ -7,3 +7,4 @@ export const starTopicUrl    = host + '/star';
 export const voteTopicUrl    = host + '/topic/vote';
 export const hotUrl          = host + '/hot';
 export const taViewUrl       = host + '/topic/detail';
+export const newAnswerUrl     = host + '/answer';

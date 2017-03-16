@@ -69,7 +69,7 @@ class DatabaseHandler(object):
             functions.error()
             return jsonify(
                 error_message='access denied',
-                is_topic_added=False,
+                is_ok=False,
             )
 
     def update_topic(self, topic_id, title, content, client_key, access_token) -> jsonify:
@@ -169,4 +169,20 @@ class DatabaseHandler(object):
                 error_message='access denied'
             )
 
+    def add_new_answer(self, topic_id, content, client_key, access_token) -> jsonify:
+        try:
+            if self.__api_security_handler.is_client_exist(client_key=client_key):
+                is_user_exist, user = self.__user_handler.get_user_email_by_access_token(access_token=access_token)
+                is_topic_exist, topic = self.__topic_handler.get_topic_by_id(topic_id=topic_id)
+                if is_user_exist and is_topic_exist:
+                    return self.__answer_handler.insert_answer(content=content, topic=topic, user=user)
 
+                raise Exception('user or topic is not found')
+
+        except Exception as e:
+            print(e)
+            functions.error()
+            return jsonify(
+                error_message='access denied',
+                is_ok=False
+            )
