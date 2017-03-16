@@ -6,15 +6,14 @@
     <div class="row">
       <p><span class="info">viewed</span> <span>{{ viewed }}</span> times</p>
     </div>
-    <div class="row">
+    <div class="row" v-if="linkedUrls.length > 0">
       <h3>Linked</h3>
-      <p v-for="linked in right.linkeds"><a :href="linked.href">{{ linked.title }}</a></p>
-
-
+      <p v-for="linkedUrl in linkedUrls"><a :href="linkedUrl.href">{{ linkedUrl.title }}</a></p>
     </div>
     <div class="row">
       <h3>Related</h3>
-      <p v-for="related in right.relateds"><a :href="related.href">{{ related.title }}</a></p>
+      <p v-if="relatedUrls.length == 0">There is no related topic url</p>
+      <p v-for="relatedUrl in relatedUrls"><a :href="relatedUrl.href">{{ relatedUrl.title }}</a></p>
     </div>
   </div>
 </template>
@@ -26,7 +25,7 @@
       components:{
           'submittedAt': DynamicSubmittedAt
       },
-      props:{date:{ type: String, default:''}, viewed:{type: Number, default:0} ,right:{ type: Object, default:null}}
+      props:{date:{ type: String, default:''}, viewed:{type: Number, default:0} ,linkedUrls:{ type: Array, default:[]}, relatedUrls: {type: Array, default: []}}
   }
 </script>
 

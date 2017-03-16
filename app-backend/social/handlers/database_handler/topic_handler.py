@@ -39,7 +39,6 @@ class TopicHandler(object):
             answer=answer_length,
             content=topic.content,
             is_topic= True,
-            view=0
         )
 
     def get_topic_by_id(self, topic_id) -> (bool, Topic):

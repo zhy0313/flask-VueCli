@@ -24,12 +24,11 @@
           <div class="col-md-3 col-md-offset-1 col-sm-2 col-sm-offset-1 col-xs-10 col-xs-offset-1">
             <ta-view-right :date="topic.submitted_at"
                            :viewed="topic.viewed"
-                           :right="topic.right"></ta-view-right>
+                           :linkedUrls="linkedUrls"
+                           :relatedUrls="relatedUrls"></ta-view-right>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
 </template>
@@ -57,7 +56,9 @@
           topic_id: this.$route.params.topic_id,
           topic: Object,
           answers: [],
-          isServerRun: false
+          isServerRun: false,
+          linkedUrls: [],
+          relatedUrls: []
         }
     },
     methods: {

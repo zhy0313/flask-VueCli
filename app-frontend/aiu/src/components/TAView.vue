@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row topic">
     <div class="col-md-1 col-sm-1 col-xs-2">
       <div class="row text-center">
         <a href="" class=""><i class="fa fa-angle-up fa-3x up-down"></i></a>
@@ -25,6 +25,8 @@
           </a>
         </div>
         <div v-else="ta.is_topic" class="author-space"></div>
+    </div>
+    <div class="col-md-12 author">
       <p class="submit-info pull-right">submitted <submitted-at :date="ta.submitted_at"></submitted-at> by <a href="">{{ ta.submitted_by }}</a></p>
     </div>
   </div>
@@ -74,6 +76,16 @@
   }
   .author-space{
     padding-top: 10px;
+  }
+  .author{
+    position: absolute;
+    bottom: 0;
+  }
+
+  .topic{
+    witdh: 100%;
+    position: relative;
+
   }
 
 </style>
