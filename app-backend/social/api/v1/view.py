@@ -111,11 +111,10 @@ def star_topic():
     try:
         json = request.get_json(silent=True)
         client_key = json['client_key']
-        refresh_key = json['refresh_key']
         access_token = json['access_token']
         topic_id = json['topic_id']
-        if client_key == '' or refresh_key == '' or access_token == '':
-            raise Exception('client_key, refresh_key or access_token cannot be null')
+        if client_key == ''  or access_token == '':
+            raise Exception('client_key or access_token cannot be null')
         else:
             return databaseHandler.start_topic(topic_id=topic_id, client_key=client_key, access_token=access_token)
 
@@ -140,7 +139,7 @@ def vote_topic():
         vote = json['vote']
 
         if client_key == '' or access_token == '':
-            raise Exception('client_key, refresh_key or access_token cannot be null')
+            raise Exception('client_key or access_token cannot be null')
         else:
             return databaseHandler.vote_topic(topic_id=topic_id, vote=vote, client_key=client_key, access_token=access_token)
     except Exception as e:

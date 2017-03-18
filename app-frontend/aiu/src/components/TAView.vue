@@ -13,8 +13,8 @@
         <a href="" @click="vote('DOWN', $event)"><i class="fa fa-angle-down fa-3x up-down"></i></a>
       </div>
       <div v-if="ta.is_topic" class="row text-center">
-        <a v-if="!ta.is_stared" href=""><i class="fa fa-star-o fa-2x star"></i></a>
-        <a v-if="ta.is_stared" href=""><i class="fa fa-star fa-2x stared"></i></a>
+        <a v-if="!ta.is_stared" href="" @click="star($event)"><i class="fa fa-star-o fa-2x star"></i></a>
+        <a v-if="ta.is_stared" href="" @click="star($event)"><i class="fa fa-star fa-2x stared"></i></a>
       </div>
     </div>
     <div class="col-md-11 col-sm-11 col-xs-10">
@@ -36,7 +36,7 @@
 <script>
   import {auth} from '@/auth/Auth';
   import {clientKey} from '@/env';
-  import {voteTopicUrl} from '@/config';
+  import {voteTopicUrl, starTopicUrl} from '@/config';
   import DynamicSubmittedAt from '@/components/DynamicSubmittedAt';
   import toastr from 'toastr';
 
@@ -67,9 +67,7 @@
                           var body = response.body;
                           console.log(body);
                           if(body.is_ok){
-                              toastr.success('Topic is voted ' + voteDirection  ,'Success')
-                              window.location.reload();
-
+                              location.reload();
                           }
                           else{
                               toastr.error(body.error_message, 'Fail')
@@ -78,12 +76,36 @@
                   })
             }
             else{
-
+                // for answwer vote
             }
+        },
+        star: function (event) {
+            event.preventDefault();
+          var data = {
+            topic_id: this.ta.id,
+            client_key: clientKey,
+            access_token: auth.getAccessToken()
+          };
+
+          this.$http.post(starTopicUrl, data)
+            .then( (response) => {
+                if(response.status == 200){
+                    var body = response.body;
+                    console.log(body)
+                    if(body.is_ok){
+                        location.reload();
+                    }
+                    else{
+                      toastr.error('Topic is not stared','Fail');
+                    }
+                }
+            });
         }
+
 
     },
     mounted() {
+        console.log(this.ta.is_stared)
     },
     beforeDestroy(){
     }

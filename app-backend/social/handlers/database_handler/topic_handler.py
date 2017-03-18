@@ -1,6 +1,6 @@
 from flask import jsonify
 from social import database
-from social.model import Topic, User, Answer
+from social.model import Topic, User, Answer, UserStar
 import social.functions as functions
 
 class TopicHandler(object):
@@ -22,10 +22,16 @@ class TopicHandler(object):
             answer=answer_length
         )
 
-    def api_view_serializer(self, topic: Topic) -> dict:
+    def api_view_serializer(self,topic: Topic, accessedUser:User) -> dict:
         try:
-            answer_length = len(Answer.query.filter_by(topic_id = topic.id).all())
+            answer_length = len(Answer.query.filter_by(topic_id=topic.id).all())
             user = User.query.filter_by(id=topic.published_by).first()
+            is_stared = UserStar.query.filter_by(user_id=accessedUser.id, topic_id=topic.id).first()
+            if is_stared is None:
+                is_stared = False
+            else:
+                is_stared = is_stared.status
+
         except Exception as e:
             functions.error()
             print(e)
@@ -38,8 +44,11 @@ class TopicHandler(object):
             vote=topic.vote,
             answer=answer_length,
             content=topic.content,
-            is_topic= True,
+            is_topic=True,
+            is_stared=is_stared
         )
+
+
 
     def get_topic_by_id(self, topic_id) -> (bool, Topic):
         is_exist = False

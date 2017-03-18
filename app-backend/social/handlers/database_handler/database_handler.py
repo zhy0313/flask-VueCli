@@ -149,7 +149,7 @@ class DatabaseHandler(object):
                 is_user_exist, user = self.__user_handler.get_user_email_by_access_token(access_token=access_token)
                 is_topic_exist, topic = self.__topic_handler.get_topic_by_id(topic_id=topic_id)
                 if is_user_exist and is_topic_exist:
-                    serialized_topic = self.__topic_handler.api_view_serializer(topic=topic)
+                    serialized_topic = self.__topic_handler.api_view_serializer(topic=topic, accessedUser=user)
                     serialied_answers = self.__answer_handler.get_topic_answers(topic=topic)
 
                     return jsonify(
