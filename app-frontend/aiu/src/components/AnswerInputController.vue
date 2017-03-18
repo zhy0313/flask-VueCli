@@ -53,8 +53,7 @@
                       console.log(body);
                       if(body.is_ok){
                           toastr.success('answer is successfully created', 'Success');
-                          this.$router.push({ path: '/' + body.topic_id})
-
+                          location.reload();
                       }
                       else{
                           toastr.error(body.error_message, 'Error');

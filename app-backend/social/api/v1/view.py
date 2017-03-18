@@ -33,7 +33,7 @@ def sign_on():
 
     except Exception as e:
         functions.error()
-        error_message = 'access denied'
+        error_message = str(e)
 
     return jsonify(
         error_message=error_message,
@@ -61,7 +61,7 @@ def sign_in():
 
     except Exception as e:
         functions.error()
-        error_message = 'access denied'
+        error_message = str(e)
 
     return jsonify(
         error_message=error_message,
@@ -97,7 +97,7 @@ def topic():
                 raise Exception('topic add update method or parameter problem')
     except Exception as e:
         functions.error()
-        error_message = 'access denied'
+        error_message = str(e)
 
     return jsonify(
         is_ok=is_ok,
@@ -120,7 +120,7 @@ def star_topic():
 
     except Exception as e:
         functions.error()
-        error_message = 'access denied'
+        error_message = str(e)
 
     return jsonify(
         is_ok=is_ok,
@@ -145,7 +145,7 @@ def vote_topic():
     except Exception as e:
         functions.error()
         print(e)
-        error_message = 'access denied'
+        error_message = str(e)
 
     return jsonify(
         is_ok=is_ok,
@@ -168,7 +168,7 @@ def hot():
     except Exception as e:
         functions.error()
         print(e)
-        error_message = 'access denied'
+        error_message = str(e)
         return jsonify(
             error_message=error_message,
             is_ok=is_ok
@@ -192,7 +192,7 @@ def view_topic():
         functions.error()
         print(e)
         return jsonify(
-            error_message=error_message,
+            error_message=str(e),
             is_ok=is_ok
         )
 
@@ -219,6 +219,6 @@ def answer():
         functions.error()
         print(e)
         return jsonify(
-            error_message=error_message,
+            error_message=str(e),
             is_ok=is_ok
         )

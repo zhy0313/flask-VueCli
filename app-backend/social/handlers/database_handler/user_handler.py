@@ -155,6 +155,9 @@ class UserHandler(object):
             raise Exception('vote is not UP or DOWN')
         
         try:
+            if user.id == topic.published_by:
+                raise Exception('Cannot vote own topic')
+
             was_voted = UserTopicVote.query.filter_by(user_id=user.id, topic_id=topic.id).first()
             if was_voted is not None:
                 if was_voted.vote != vote:
@@ -164,10 +167,14 @@ class UserHandler(object):
                     elif topic.vote - 1 == 0:
                         vote -= 1
                     topic.vote += vote
-                    is_ok = True
                 else:
-                    is_ok = False
-                    error_message = 'You have already voted the topic'
+                    if was_voted.vote == -1:
+                        topic.vote += 1
+                    elif was_voted.vote == 1:
+                        topic.vote -= 1
+                    was_voted.vote = 0
+                is_ok = True
+
             else:
                 topic_vote = UserTopicVote(user_id=user.id, topic_id=topic.id, vote=vote)
                 database.session.add(topic_vote)
@@ -177,7 +184,7 @@ class UserHandler(object):
             database.session.commit()
         except Exception as e:
             functions.error()
-            error_message = 'access denied'
+            error_message = str(e)
 
         return jsonify(
             topic_id=topic_id,

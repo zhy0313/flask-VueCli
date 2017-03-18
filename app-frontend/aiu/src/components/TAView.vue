@@ -2,7 +2,8 @@
   <div class="row topic">
     <div class="col-md-1 col-sm-1 col-xs-2">
       <div class="row text-center">
-        <a href="" @click="vote('UP', $event)" class=""><i class="fa fa-angle-up fa-3x up-down"></i></a>
+        <a href="" @click="vote('UP', $event)" v-if="!ta.is_up_voted"><i class="fa fa-angle-up fa-3x up-down"></i></a>
+        <a href="" @click="vote('UP', $event)" v-if="ta.is_up_voted"><i class="fa fa-angle-up fa-3x uped-downed"></i></a>
       </div>
       <div class="row text-center">
           <div class="">
@@ -10,7 +11,8 @@
           </div>
       </div>
       <div class="row text-center">
-        <a href="" @click="vote('DOWN', $event)"><i class="fa fa-angle-down fa-3x up-down"></i></a>
+        <a href="" @click="vote('DOWN', $event)" v-if="!ta.is_down_voted"><i class="fa fa-angle-down fa-3x up-down"></i></a>
+        <a href="" @click="vote('DOWN', $event)" v-if="ta.is_down_voted"><i class="fa fa-angle-down fa-3x uped-downed"></i></a>
       </div>
       <div v-if="ta.is_topic" class="row text-center">
         <a v-if="!ta.is_stared" href="" @click="star($event)"><i class="fa fa-star-o fa-2x star"></i></a>
@@ -120,11 +122,14 @@
   .up-down{
     color: #464348;
   }
+  .uped-downed{
+    color: #ff5f33;
+  }
   .star{
     color: #93939a;
   }
   .stared{
-    color: #93939a;
+    color: #ff9658;
   }
   .rating{
     color: #464348;

@@ -1,6 +1,11 @@
 from flask import jsonify
 from social import database
-from social.model import Topic, User, Answer, UserStar
+from social.model import Topic
+from social.model import User
+from social.model import Answer
+from social.model import UserStar
+from social.model import UserTopicVote
+
 import social.functions as functions
 
 class TopicHandler(object):
@@ -26,11 +31,18 @@ class TopicHandler(object):
         try:
             answer_length = len(Answer.query.filter_by(topic_id=topic.id).all())
             user = User.query.filter_by(id=topic.published_by).first()
+            user_vote = UserTopicVote.query.filter_by(user_id=accessedUser.id, topic_id=topic.id).first()
             is_stared = UserStar.query.filter_by(user_id=accessedUser.id, topic_id=topic.id).first()
             if is_stared is None:
                 is_stared = False
             else:
                 is_stared = is_stared.status
+
+            is_up_voted  = False
+            is_down_voted = False
+            if user_vote is not None:
+                is_up_voted = user_vote.vote == 1
+                is_down_voted = user_vote.vote == -1
 
         except Exception as e:
             functions.error()
@@ -45,7 +57,9 @@ class TopicHandler(object):
             answer=answer_length,
             content=topic.content,
             is_topic=True,
-            is_stared=is_stared
+            is_stared=is_stared,
+            is_up_voted=is_up_voted,
+            is_down_voted=is_down_voted
         )
 
 
@@ -111,7 +125,6 @@ class TopicHandler(object):
             topics = Topic.query.all()
             topics = Topic.query.order_by(Topic.vote.desc(), Topic.published_at.desc()).all()
             topics = [self.api_hot_serializer(topic) for topic in topics]
-            #sorted(topics, key= lambda topic: topic['vote'])
             is_ok = True
         except Exception as e:
             functions.error()
