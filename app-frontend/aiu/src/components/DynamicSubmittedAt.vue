@@ -15,7 +15,7 @@
     },
     methods: {
       dynamicSubmitDate: function () {
-        this.submittedAt =  this.$moment(this.date).fromNow();
+        this.submittedAt =  this.$moment(this.date, ["YYYY-MM-DD HH:mm"]).fromNow();
       }
     },
     mounted() {

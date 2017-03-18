@@ -146,6 +146,7 @@ class UserHandler(object):
 
     def vote_topic(self, user: User, topic: Topic, vote) -> jsonify:
         is_ok, error_message = False, None
+        topic_id = topic.id
         if vote == 'UP':
             vote = 1
         elif vote == 'DOWN':
@@ -159,18 +160,23 @@ class UserHandler(object):
                 if was_voted.vote != vote:
                     was_voted.vote = vote
                     topic.vote += vote
+                    is_ok = True
+                else:
+                    is_ok = False
+                    error_message = 'You have already voted the topic'
             else:
                 topic_vote = UserTopicVote(user_id=user.id, topic_id=topic.id, vote=vote)
                 database.session.add(topic_vote)
                 topic.vote += vote
+                is_ok = True
 
             database.session.commit()
-            is_ok = True
         except Exception as e:
             functions.error()
             error_message = 'access denied'
 
         return jsonify(
+            topic_id=topic_id,
             is_ok=is_ok,
             error_message=error_message
         )

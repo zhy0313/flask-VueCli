@@ -37,7 +37,8 @@
       data(){
           return{
               topics: [],
-              isServerRun: false
+              isServerRun: false,
+              intervalId: 0
           }
       },
       methods:{
@@ -60,6 +61,11 @@
           }
       },
       created() {
+
+          this.fetchTopics();
+
+      },
+      mounted: function () {
           this.fetchTopics();
       }
 

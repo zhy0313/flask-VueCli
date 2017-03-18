@@ -2,7 +2,7 @@
   <div class="row topic">
     <div class="col-md-1 col-sm-1 col-xs-2">
       <div class="row text-center">
-        <a href="" class=""><i class="fa fa-angle-up fa-3x up-down"></i></a>
+        <a href="" @click="vote('UP', $event)" class=""><i class="fa fa-angle-up fa-3x up-down"></i></a>
       </div>
       <div class="row text-center">
           <div class="">
@@ -10,7 +10,7 @@
           </div>
       </div>
       <div class="row text-center">
-        <a href=""><i class="fa fa-angle-down fa-3x up-down"></i></a>
+        <a href="" @click="vote('DOWN', $event)"><i class="fa fa-angle-down fa-3x up-down"></i></a>
       </div>
       <div v-if="ta.is_topic" class="row text-center">
         <a v-if="!ta.is_stared" href=""><i class="fa fa-star-o fa-2x star"></i></a>
@@ -34,7 +34,11 @@
 </template>
 
 <script>
+  import {auth} from '@/auth/Auth';
+  import {clientKey} from '@/env';
+  import {voteTopicUrl} from '@/config';
   import DynamicSubmittedAt from '@/components/DynamicSubmittedAt';
+  import toastr from 'toastr';
 
   export default{
     name: '',
@@ -48,6 +52,35 @@
         'submittedAt': DynamicSubmittedAt
     },
     methods: {
+        vote: function (voteDirection, event) {
+            event.preventDefault();
+            var data = {
+              topic_id: this.ta.id,
+              vote: voteDirection,
+              client_key: clientKey,
+              access_token: auth.getAccessToken()
+            };
+           if (this.ta.is_topic){
+                this.$http.post(voteTopicUrl, data)
+                  .then( (response) => {
+                      if(response.status == 200){
+                          var body = response.body;
+                          console.log(body);
+                          if(body.is_ok){
+                              toastr.success('Topic is voted ' + voteDirection  ,'Success')
+                              window.location.reload();
+
+                          }
+                          else{
+                              toastr.error(body.error_message, 'Fail')
+                          }
+                      }
+                  })
+            }
+            else{
+
+            }
+        }
 
     },
     mounted() {

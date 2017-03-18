@@ -9,14 +9,12 @@ def now():
     if month < 10:
         month = '0' + str(month)
     day = datetime.datetime.now().day
+    if day < 10:
+        day = '0' + str(day)
     hour = datetime.datetime.now().hour
     minute = datetime.datetime.now().minute
 
     return '{}-{}-{} {}:{}'.format(year, month, day, hour, minute)
-
-
-
-
 
 
 

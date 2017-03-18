@@ -5,12 +5,12 @@ import social.functions as functions
 
 databaseHandler = database_handler.DatabaseHandler()
 
-
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials','true')
     return response
 
 
@@ -135,12 +135,11 @@ def vote_topic():
     try:
         json = request.get_json(silent=True)
         client_key = json['client_key']
-        refresh_key = json['refresh_key']
         access_token = json['access_token']
         topic_id = json['topic_id']
         vote = json['vote']
 
-        if client_key == '' or refresh_key == '' or access_token == '':
+        if client_key == '' or access_token == '':
             raise Exception('client_key, refresh_key or access_token cannot be null')
         else:
             return databaseHandler.vote_topic(topic_id=topic_id, vote=vote, client_key=client_key, access_token=access_token)
@@ -165,10 +164,12 @@ def hot():
         if client_key == '' or access_token == '':
             error_message = 'client key or access token can not be empty'
             raise Exception(error_message)
+
         return databaseHandler.hot(client_key=client_key, access_token=access_token)
     except Exception as e:
         functions.error()
         print(e)
+        error_message = 'access denied'
         return jsonify(
             error_message=error_message,
             is_ok=is_ok

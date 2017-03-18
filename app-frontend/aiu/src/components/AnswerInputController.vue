@@ -53,7 +53,7 @@
                       console.log(body);
                       if(body.is_ok){
                           toastr.success('answer is successfully created', 'Success');
-                          this.$router.push({ path: 'ta/' + body.topic_id})
+                          this.$router.push({ path: '/' + body.topic_id})
 
                       }
                       else{
