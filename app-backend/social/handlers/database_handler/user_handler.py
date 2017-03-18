@@ -159,6 +159,10 @@ class UserHandler(object):
             if was_voted is not None:
                 if was_voted.vote != vote:
                     was_voted.vote = vote
+                    if topic.vote + 1 == 0:
+                        vote += 1
+                    elif topic.vote - 1 == 0:
+                        vote -= 1
                     topic.vote += vote
                     is_ok = True
                 else:

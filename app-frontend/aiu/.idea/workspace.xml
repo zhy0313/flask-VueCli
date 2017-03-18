@@ -18,7 +18,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TAView.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TAView.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/TAView.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
@@ -27,6 +27,16 @@
                 <element signature="e#1389#1422#0" expanded="true" />
                 <element signature="e#1894#2790#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Hot.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/Hot.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="71" column="21" lean-forward="false" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -111,10 +121,10 @@
         <option value="$PROJECT_DIR$/src/config.js" />
         <option value="$PROJECT_DIR$/src/components/TopicInput.vue" />
         <option value="$PROJECT_DIR$/src/components/PageView.vue" />
-        <option value="$PROJECT_DIR$/src/components/Hot.vue" />
         <option value="$PROJECT_DIR$/src/components/DynamicSubmittedAt.vue" />
         <option value="$PROJECT_DIR$/src/components/AnswerInputController.vue" />
         <option value="$PROJECT_DIR$/src/components/TAView.vue" />
+        <option value="$PROJECT_DIR$/src/components/Hot.vue" />
       </list>
     </option>
   </component>
@@ -390,12 +400,12 @@
       <workItem from="1489562363941" duration="6899000" />
       <workItem from="1489689723753" duration="4571000" />
       <workItem from="1489695717489" duration="2968000" />
-      <workItem from="1489819931668" duration="7128000" />
+      <workItem from="1489819931668" duration="8185000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131808000" />
+    <option name="totallyTimeSpent" value="132865000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="24" width="1867" height="1056" extended-state="6" />
@@ -716,14 +726,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Hot.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="903">
-          <caret line="68" column="10" lean-forward="false" selection-start-line="68" selection-start-column="10" selection-end-line="68" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/PageView.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -768,6 +770,14 @@
             <element signature="e#1389#1422#0" expanded="true" />
             <element signature="e#1894#2790#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Hot.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="71" column="21" lean-forward="false" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>

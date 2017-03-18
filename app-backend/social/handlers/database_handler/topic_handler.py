@@ -109,8 +109,9 @@ class TopicHandler(object):
         topics = []
         try:
             topics = Topic.query.all()
+            topics = Topic.query.order_by(Topic.vote.desc(), Topic.published_at.desc()).all()
             topics = [self.api_hot_serializer(topic) for topic in topics]
-            sorted(topics, key= lambda topic: topic['vote'])
+            #sorted(topics, key= lambda topic: topic['vote'])
             is_ok = True
         except Exception as e:
             functions.error()

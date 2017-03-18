@@ -43,6 +43,7 @@
       },
       methods:{
           fetchTopics: function () {
+              console.log('worked');
               var data = {
                   access_token: auth.getAccessToken(),
                   client_key: clientKey
@@ -61,12 +62,15 @@
           }
       },
       created() {
-
-          this.fetchTopics();
+        this.fetchTopics();
+        //this.intervalId = setInterval(this.fetchTopics(), 15 * 1000);
 
       },
       mounted: function () {
-          this.fetchTopics();
+          this.intervalId = setInterval(function () {
+            this.fetchTopics()
+          }.bind(this), 10 * 1000);
+
       }
 
   }
